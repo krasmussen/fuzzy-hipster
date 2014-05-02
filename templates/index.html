@@ -1,0 +1,55 @@
+<html>
+<head>
+<script src="static/jquery.js"></script>
+<script src="static/search.js"></script>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #cccccc;
+}
+</style>
+</head>
+<body>
+<br>
+Search: <input id="searchfield" type="text" \> <button type="submit" onclick="searchButtonPressed()">SEARCH External</button><br><br>
+<hr>
+<br><br>
+<form method="POST" action="">
+<input type="hidden" name="index" value="True">
+Title: <input name="titlefield" id="titlefield" type="text" \><br>
+Style: <select name="stylefield" id="stylefield">
+	<option value="Live Action">Live Action</option>
+	<option value="Animated">Animated</option>
+</select><br>
+Format: <select name="formatfield" id="formatfield">
+	<option value="DVD">DVD</option>
+	<option value="Blu-ray">Blu-ray</option>
+	<option value="VHS">VHS</option>
+	<option value="Digital">Digital</option>
+</select><br>
+Year: <input name="yearfield" id="yearfield" type="text" \><br>
+Runtime: <input name="runtimefield" id="runtimefield" type="text" \><br>
+Genre: <input name="genrefield" id="genrefield" type="text" \><br>
+Actors: <input name="actorsfield" id="actorsfield" type="text" \><br>
+<input type="submit">
+</form><br>
+<form method="POST" action="">
+<input type="hidden" name="search" value="True">
+Search Invintory: <input name="searchinput" id="searchinput" type="text" \><br>
+<input type="submit">
+</form><br>
+{% if results %}
+	{{ results['hits']['total'] }} Result(s) found<br>
+	{% for result in results['hits']['hits']%}
+		Title: {{ result['_source']['title'] }}<br>
+		Format: {{ result['_source']['format'] }}<br>
+		Actors: {{ result['_source']['actors'] }}<br>
+		Year: {{ result['_source']['year'] }}<br>
+		Genre: {{ result['_source']['genre'] }}<br>
+		Runtime: {{ result['_source']['runtime'] }}<br>
+		<br>
+	{% endfor %}
+{% endif %}
+</body>
+</html>
